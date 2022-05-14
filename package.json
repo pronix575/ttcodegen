@@ -35,8 +35,5 @@
   "bin": {
     "ttcodegen": "./bin/ttcodegen",
     "ttc": "./bin/ttcodegen"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   }
 }

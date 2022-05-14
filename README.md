@@ -4,6 +4,12 @@
 
 # Cli for simple creation effector-services and React-components
 
+## Installation
+
+```bash
+npm i -g @pronix/ttcodegen
+```
+
 ## Basic usage:
 
 ### 1. Creation of service

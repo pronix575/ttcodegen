@@ -1,0 +1,38 @@
+{
+  "name": "@pronix/ttcodegen",
+  "version": "1.0.0",
+  "description": "codegen for effector services",
+  "main": "./dist/index.js",
+  "author": "pronix575 <pronix432@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pronix575/ttcodegen/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pronix575/ttcodegen.git"
+  },
+  "homepage": "https://github.com/pronix575/ttcodegen#readme",
+  "keywords": [
+    "cli",
+    "codegen",
+    "effector",
+    "services"
+  ],
+  "scripts": {
+    "start": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "^9.2.0",
+    "inquirer": "^8.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.33",
+    "typescript": "^4.6.4"
+  },
+  "bin": {
+    "ttcodegen": "./bin/ttcodegen",
+    "ttc": "./bin/ttcodegen"
+  }
+}

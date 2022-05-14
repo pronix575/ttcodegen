@@ -20,7 +20,8 @@
     "services"
   ],
   "scripts": {
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "chalk": "4.1.2",
@@ -34,5 +35,8 @@
   "bin": {
     "ttcodegen": "./bin/ttcodegen",
     "ttc": "./bin/ttcodegen"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

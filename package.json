@@ -1,6 +1,7 @@
 {
   "name": "@pronix/ttcodegen",
   "version": "1.0.0",
+  "private": false,
   "description": "codegen for effector services",
   "main": "./dist/index.js",
   "author": "pronix575 <pronix432@gmail.com>",
@@ -21,7 +22,8 @@
   ],
   "scripts": {
     "start": "node ./dist/index.js",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "chalk": "4.1.2",

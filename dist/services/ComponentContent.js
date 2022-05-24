@@ -11,11 +11,11 @@ class ComponentContent {
     }
     getCoponent() {
         return `import React, { FC } from "react"
-import {Wrapper} from "./${this.componentName}.styled.ts"
+import { Wrapper } from "./${this.componentName}.styled"
 
 export const ${this.componentName}: FC = ({}) => {
-    return <Wrapper></Wrapper>
-}
+  return <Wrapper></Wrapper>
+};
 `;
     }
     getStyled() {

@@ -8,7 +8,7 @@ class ServiceContent {
     }
     getIndex() {
         return `export { ${this.serviceName} } from "./${this.serviceName}.models"
-export { ${capitalizeFirstLetter(this.name)}Container } from "./${this.serviceName}"
+export { ${capitalizeFirstLetter(this.name)}Container } from "./${this.serviceName}.container"
 `;
     }
     getModels() {

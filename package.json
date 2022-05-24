@@ -21,9 +21,7 @@
     "services"
   ],
   "scripts": {
-    "build": "tsc --build",
     "start": "node ./dist/index.js",
-    "prepublish": "yarn build",
     "publish": "npm publish --access public"
   },
   "dependencies": {

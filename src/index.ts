@@ -5,7 +5,7 @@ import { ComponentCreator } from "./services/ComponentCreator";
 program
   .name("ttcodegen")
   .description("Cli for creation effector services © TT-frontend team 2022")
-  .version("1.0.0");
+  .version("1.3.4");
 
 program
   .command("generate")

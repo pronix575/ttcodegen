@@ -7,9 +7,7 @@ class ComponentContent {
         this.componentName = `${name}`;
     }
     getIndex() {
-        return `export { ${this.componentName} } from "./${this.componentName}.tsx
-  export { ${this.componentName} } from "./${this.componentName}.tsx"
-  "`;
+        return `export { ${this.componentName} } from "./${this.componentName}"`;
     }
     getCoponent() {
         return `import React, { FC } from "react"

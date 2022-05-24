@@ -78,7 +78,6 @@ class ServiceCreator extends FsCreator_1.FsCreator {
     }
     checkServiceFolderExist() {
         const path = (0, path_1.join)(this.servicePath, this.name + "Service" + ".models.ts");
-        console.log(path);
         if (fs_1.default.existsSync(path)) {
             (0, writeError_1.writeError)(errorCodes_1.ErrorText.SERVICE_ALREADY_EXIST, 1);
             return false;

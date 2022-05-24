@@ -7,9 +7,9 @@ class ServiceContent {
         this.serviceName = `${name}Service`;
     }
     getIndex() {
-        return `export { ${this.serviceName} } from "./${this.serviceName}.models.ts
-export { ${capitalizeFirstLetter(this.name)}Container } from "./${this.serviceName}.tsx"
-"`;
+        return `export { ${this.serviceName} } from "./${this.serviceName}.models"
+export { ${capitalizeFirstLetter(this.name)}Container } from "./${this.serviceName}"
+`;
     }
     getModels() {
         return `import { createDomain } from 'effector';
@@ -37,7 +37,7 @@ export const ${this.serviceName} = {
     getContainer() {
         return `import React from "react"
 
-export const ${capitalizeFirstLetter(this.name)}Conatiner = () => {
+export const ${capitalizeFirstLetter(this.name)}Container = () => {
   return <></>
 }
 `;

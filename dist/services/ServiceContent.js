@@ -7,8 +7,8 @@ class ServiceContent {
         this.serviceName = `${name}Service`;
     }
     getIndex() {
-        return `export { ${this.serviceName} } from "./${this.serviceName}.models"
-export { ${capitalizeFirstLetter(this.name)}Container } from "./${this.serviceName}.container"
+        return `export { ${this.serviceName} } from './${this.serviceName}.models';
+export { ${capitalizeFirstLetter(this.name)}Container } from './${this.serviceName}.container';
 `;
     }
     getModels() {
@@ -35,11 +35,11 @@ export const ${this.serviceName} = {
         return "";
     }
     getContainer() {
-        return `import React from "react"
+        return `import React from 'react';
 
 export const ${capitalizeFirstLetter(this.name)}Container = () => {
   return <></>
-}
+};
 `;
     }
 }

@@ -33,12 +33,16 @@ class ComponentCreator extends FsCreator_1.FsCreator {
     createStyled() {
         this.generateFile(FileType.styled);
     }
+    createTypes() {
+        this.generateFile(FileType.types);
+    }
     generateFile(fileType) {
         const path = (0, path_1.join)(`${this.servicePath}`, this.getFileName(fileType));
         const serviceContent = {
             [FileType.component]: this.componentContent.getCoponent.bind(this.componentContent),
             [FileType.styled]: this.componentContent.getStyled.bind(this.componentContent),
             [FileType.index]: this.componentContent.getIndex.bind(this.componentContent),
+            [FileType.types]: this.componentContent.getIndex.bind(this.componentContent),
         };
         const generator = serviceContent[fileType];
         fs_1.default.writeFileSync(path, generator());
@@ -53,6 +57,7 @@ class ComponentCreator extends FsCreator_1.FsCreator {
         this.createIndex();
         this.createComponentFile();
         this.createStyled();
+        this.createTypes();
         this.writeLog();
     }
     getFileName(fileType) {
@@ -84,4 +89,5 @@ var FileType;
     FileType["styled"] = "styled";
     FileType["index"] = "index";
     FileType["component"] = "component";
+    FileType["types"] = "types";
 })(FileType || (FileType = {}));

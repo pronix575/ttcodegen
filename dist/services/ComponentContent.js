@@ -7,13 +7,14 @@ class ComponentContent {
         this.componentName = `${name}`;
     }
     getIndex() {
-        return `export { ${this.componentName} } from "./${this.componentName}"`;
+        return `export { ${this.componentName} } from './${this.componentName}'`;
     }
     getCoponent() {
-        return `import React, { FC } from "react"
-import { Wrapper } from "./${this.componentName}.styled"
+        return `import React, { FC } from 'react';
+import { Wrapper } from './${this.componentName}.styled';
+import { ${this.componentName}Props } from '${this.componentName}.types';
 
-export const ${this.componentName}: FC = ({}) => {
+export const ${this.componentName}: FC<${this.componentName}Props> = ({}) => {
   return <Wrapper></Wrapper>
 };
 `;
@@ -23,6 +24,11 @@ export const ${this.componentName}: FC = ({}) => {
 
 export const Wrapper = styled.div${"``"}
 `;
+    }
+    getTypes() {
+        return `export type ${this.componentName}Props = {
+  
+};`;
     }
 }
 exports.ComponentContent = ComponentContent;

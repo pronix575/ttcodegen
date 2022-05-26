@@ -33,6 +33,10 @@ export class ComponentCreator extends FsCreator {
     this.generateFile(FileType.styled);
   }
 
+  createTypes() {
+    this.generateFile(FileType.types);
+  }
+
   private generateFile(fileType: FileType) {
     const path = join(`${this.servicePath}`, this.getFileName(fileType));
 
@@ -64,6 +68,7 @@ export class ComponentCreator extends FsCreator {
     this.createIndex();
     this.createComponentFile();
     this.createStyled();
+    this.createTypes();
 
     this.writeLog();
   }
@@ -101,4 +106,5 @@ enum FileType {
   styled = "styled",
   index = "index",
   component = "component",
+  types = "types",
 }

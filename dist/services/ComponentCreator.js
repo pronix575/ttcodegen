@@ -42,7 +42,7 @@ class ComponentCreator extends FsCreator_1.FsCreator {
             [FileType.component]: this.componentContent.getCoponent.bind(this.componentContent),
             [FileType.styled]: this.componentContent.getStyled.bind(this.componentContent),
             [FileType.index]: this.componentContent.getIndex.bind(this.componentContent),
-            [FileType.types]: this.componentContent.getIndex.bind(this.componentContent),
+            [FileType.types]: this.componentContent.getTypes.bind(this.componentContent),
         };
         const generator = serviceContent[fileType];
         fs_1.default.writeFileSync(path, generator());

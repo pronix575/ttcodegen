@@ -50,7 +50,7 @@ export class ComponentCreator extends FsCreator {
       [FileType.index]: this.componentContent.getIndex.bind(
         this.componentContent
       ),
-      [FileType.types]: this.componentContent.getIndex.bind(
+      [FileType.types]: this.componentContent.getTypes.bind(
         this.componentContent
       ),
     };

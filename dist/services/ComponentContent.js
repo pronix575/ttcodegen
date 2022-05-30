@@ -12,7 +12,7 @@ class ComponentContent {
     getCoponent() {
         return `import React, { FC } from 'react';
 import { Wrapper } from './${this.componentName}.styled';
-import { ${this.componentName}Props } from '${this.componentName}.types';
+import { ${this.componentName}Props } from './${this.componentName}.types';
 
 export const ${this.componentName}: FC<${this.componentName}Props> = ({}) => {
   return <Wrapper></Wrapper>

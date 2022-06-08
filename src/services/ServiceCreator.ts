@@ -47,6 +47,10 @@ export class ServiceCreator extends FsCreator {
     this.generateFile(FileType.conatiner);
   }
 
+  createTypes() {
+    this.generateFile(FileType.types);
+  }
+
   private generateFile(fileType: FileType) {
     const path = join(`${this.servicePath}`, this.getFileName(fileType));
 
@@ -62,6 +66,7 @@ export class ServiceCreator extends FsCreator {
       [FileType.conatiner]: this.serviceContent.getContainer.bind(
         this.serviceContent
       ),
+      [FileType.types]: this.serviceContent.getTypes.bind(this.serviceContent),
     };
 
     const generator = serviceContent[fileType];
@@ -82,6 +87,7 @@ export class ServiceCreator extends FsCreator {
     this.createApi();
     this.createRelations();
     this.createContainer();
+    this.createTypes();
 
     this.writeLog();
   }
@@ -113,4 +119,5 @@ enum FileType {
   api = "api",
   relations = "relations",
   conatiner = "container",
+  types = "types",
 }

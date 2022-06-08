@@ -14,7 +14,7 @@ export { ${capitalizeFirstLetter(this.name)}Container } from './${this.serviceNa
     getModels() {
         return `import { createDomain } from 'effector';
 
-const ${this.serviceName}Domain = createDomain(
+const domain = createDomain(
   '${this.serviceName}'
 );
 
@@ -41,6 +41,9 @@ export const ${capitalizeFirstLetter(this.name)}Container = () => {
   return <></>
 };
 `;
+    }
+    getTypes() {
+        return ``;
     }
 }
 exports.ServiceContent = ServiceContent;

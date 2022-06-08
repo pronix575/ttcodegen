@@ -44,6 +44,9 @@ class ServiceCreator extends FsCreator_1.FsCreator {
     createContainer() {
         this.generateFile(FileType.conatiner);
     }
+    createTypes() {
+        this.generateFile(FileType.types);
+    }
     generateFile(fileType) {
         const path = (0, path_1.join)(`${this.servicePath}`, this.getFileName(fileType));
         const serviceContent = {
@@ -52,6 +55,7 @@ class ServiceCreator extends FsCreator_1.FsCreator {
             [FileType.index]: this.serviceContent.getIndex.bind(this.serviceContent),
             [FileType.relations]: this.serviceContent.getRelations.bind(this.serviceContent),
             [FileType.conatiner]: this.serviceContent.getContainer.bind(this.serviceContent),
+            [FileType.types]: this.serviceContent.getTypes.bind(this.serviceContent),
         };
         const generator = serviceContent[fileType];
         fs_1.default.writeFileSync(path, generator());
@@ -67,6 +71,7 @@ class ServiceCreator extends FsCreator_1.FsCreator {
         this.createApi();
         this.createRelations();
         this.createContainer();
+        this.createTypes();
         this.writeLog();
     }
     getFileName(fileType) {
@@ -93,4 +98,5 @@ var FileType;
     FileType["api"] = "api";
     FileType["relations"] = "relations";
     FileType["conatiner"] = "container";
+    FileType["types"] = "types";
 })(FileType || (FileType = {}));

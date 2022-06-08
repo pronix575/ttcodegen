@@ -93,7 +93,7 @@ class ServiceCreator extends FsCreator_1.FsCreator {
 exports.ServiceCreator = ServiceCreator;
 var FileType;
 (function (FileType) {
-    FileType["models"] = "models";
+    FileType["models"] = "model";
     FileType["index"] = "index";
     FileType["api"] = "api";
     FileType["relations"] = "relations";

@@ -6,7 +6,7 @@ const ComponentCreator_1 = require("./services/ComponentCreator");
 commander_1.program
     .name("ttcodegen")
     .description("Cli for creation effector services © TT-frontend team 2022")
-    .version("1.4.2");
+    .version("1.4.3");
 commander_1.program
     .command("generate")
     .alias("g")

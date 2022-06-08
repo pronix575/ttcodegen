@@ -114,7 +114,7 @@ export class ServiceCreator extends FsCreator {
 }
 
 enum FileType {
-  models = "models",
+  models = "model",
   index = "index",
   api = "api",
   relations = "relations",

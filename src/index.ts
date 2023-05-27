@@ -1,20 +1,27 @@
 import { program } from "commander";
 import { ServiceCreator } from "./services/ServiceCreator";
 import { ComponentCreator } from "./services/ComponentCreator";
+import figlet from "figlet";
+import chalk from "chalk";
+import { getConfig } from "./config";
+
+const logo = chalk.hex("#189EE9")(figlet.textSync("ttcodegen"));
 
 program
   .name("ttcodegen")
-  .description("Cli for creation effector services © TT-frontend team 2022")
+  .description(
+    `${logo}\n\nCli for creating effector services © TT-frontend team 2022`
+  )
   .version("1.4.4");
 
 program
-  .command("generate")
-  .alias("g")
   .option("--service, -s")
-  .option("--component -c")
+  .option("--component, -c")
+  .option("--req")
   .argument("<path>", "Service path")
   .argument("<name>", "Service name")
   .action((path, name, options) => {
+    console.log(path, name, options);
     if (options.C) {
       const componentCreator = new ComponentCreator(path, name);
 
@@ -28,4 +35,7 @@ program
     }
   });
 
-program.parse();
+// program.parse();
+
+console.log(getConfig());
+console.log(__dirname)

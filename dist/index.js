@@ -13,7 +13,7 @@ const logo = chalk_1.default.hex("#189EE9")(figlet_1.default.textSync("ttcodegen
 commander_1.program
     .name("ttcodegen")
     .description(`${logo}\n\nCli for creating effector services © TT-frontend team 2022`)
-    .version("1.4.4");
+    .version("2.0.0-beta-1");
 commander_1.program
     .option("--service, -s")
     .option("--component, -c")
@@ -33,4 +33,3 @@ commander_1.program
 });
 // program.parse();
 console.log((0, config_1.getConfig)());
-console.log(__dirname);

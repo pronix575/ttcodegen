@@ -31,7 +31,7 @@
     "figlet": "^1.6.0",
     "glob": "^10.2.6",
     "handlebars": "^4.7.7",
-    "inquirer": "^8.2.4"
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.33",

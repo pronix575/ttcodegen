@@ -1,6 +1,9 @@
 import { getFileContent } from "./filesManager";
 import { globSync } from "glob";
 import { findFileTop } from "./utils/findFileTop";
+import { CliConfiguration, TTCodegenConfig } from "./types";
+import { ttCodegenConfigSchema } from "./validateSchemas";
+import chalk from "chalk";
 
 function findTtcodegenJson() {
   const bottomFile = globSync("**/ttcodegen.json")?.[0] || null;
@@ -12,18 +15,34 @@ function findTtcodegenJson() {
   return topFile;
 }
 
-export function getConfig() {
+export function getConfig(): TTCodegenConfig | null {
   const configFilePath = findTtcodegenJson();
 
-  if (!configFilePath) return null;
+  if (!configFilePath) {
+    console.log(
+      chalk.redBright(`
+Can't find a config file ttcodegen.json
+`)
+    );
+
+    return null;
+  }
 
   const configFileContent = getFileContent(configFilePath);
 
   try {
     const contentJson = JSON.parse(configFileContent);
 
+    ttCodegenConfigSchema.validateSync(contentJson);
+
     return contentJson;
-  } catch (e) {
+  } catch (e: any) {
+    const validationResult = chalk.redBright(e?.errors?.join("\n"));
+
+    console.log(`
+config is not correct\n
+${validationResult}
+    `);
     return null;
   }
 }

@@ -12,7 +12,7 @@ program
   .description(
     `${logo}\n\nCli for creating effector services © TT-frontend team 2022`
   )
-  .version("1.4.4");
+  .version("2.0.0-beta-1");
 
 program
   .option("--service, -s")
@@ -38,4 +38,3 @@ program
 // program.parse();
 
 console.log(getConfig());
-console.log(__dirname)

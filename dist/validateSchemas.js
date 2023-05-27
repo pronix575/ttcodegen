@@ -25,12 +25,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ttCodegenConfigSchema = void 0;
 const yup = __importStar(require("yup"));
+const cliOptionSchema = yup
+    .object({
+    name: yup.string().required(),
+    option: yup.string().required(),
+})
+    .required();
+const cliArgumentSchema = yup
+    .object({
+    name: yup.string().required(),
+    description: yup.string(),
+})
+    .required();
 exports.ttCodegenConfigSchema = yup.object({
-    cli: yup
-        .object({
-        options: yup.array(yup.string().required()).required(),
-        path: yup.string().required(),
-        name: yup.string().required(),
-    })
-        .required(),
+    options: yup.array(cliOptionSchema).required(),
+    arguments: yup.array(cliArgumentSchema).required(),
+    templatesDirectoryPath: yup.string().required(),
 });

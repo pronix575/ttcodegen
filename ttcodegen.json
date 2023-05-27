@@ -1,0 +1,23 @@
+{
+  "templatesDirectoryPath": "./ttcTemplates",
+  "arguments": [
+    {
+      "name": "<name>",
+      "description": "Entity name"
+    },
+    {
+      "name": "<path>",
+      "description": "Entity path"
+    }
+  ],
+  "options": [
+    {
+      "name": "component",
+      "option": "--component, -c"
+    },
+    {
+      "name": "service",
+      "option": "--service, -s"
+    }
+  ]
+}

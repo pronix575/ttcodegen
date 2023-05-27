@@ -1,7 +1,7 @@
 import { getFileContent } from "./filesManager";
 import { globSync } from "glob";
 import { findFileTop } from "./utils/findFileTop";
-import { CliConfiguration, TTCodegenConfig } from "./types";
+import { TTCodegenConfig } from "./types";
 import { ttCodegenConfigSchema } from "./validateSchemas";
 import chalk from "chalk";
 
@@ -21,7 +21,7 @@ export function getConfig(): TTCodegenConfig | null {
   if (!configFilePath) {
     console.log(
       chalk.redBright(`
-Can't find a config file ttcodegen.json
+⚠️  Can't find a config file ${chalk.yellowBright`"ttcodegen.json"`}
 `)
     );
 
@@ -37,12 +37,15 @@ Can't find a config file ttcodegen.json
 
     return contentJson;
   } catch (e: any) {
-    const validationResult = chalk.redBright(e?.errors?.join("\n"));
+    const validationResult = chalk.redBright(
+      e?.errors?.join("\n") || "document format isn't correct"
+    );
 
     console.log(`
-config is not correct\n
-${validationResult}
+⚠️  config is not correct:\n
+[ ${validationResult} ]
     `);
+
     return null;
   }
 }

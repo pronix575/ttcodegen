@@ -20,7 +20,7 @@ function getConfig() {
     const configFilePath = findTtcodegenJson();
     if (!configFilePath) {
         console.log(chalk_1.default.redBright(`
-Can't find a config file ttcodegen.json
+⚠️  Can't find a config file ${chalk_1.default.yellowBright `"ttcodegen.json"`}
 `));
         return null;
     }
@@ -31,10 +31,10 @@ Can't find a config file ttcodegen.json
         return contentJson;
     }
     catch (e) {
-        const validationResult = chalk_1.default.redBright(e?.errors?.join("\n"));
+        const validationResult = chalk_1.default.redBright(e?.errors?.join("\n") || "document format isn't correct");
         console.log(`
-config is not correct\n
-${validationResult}
+⚠️  config is not correct:\n
+[ ${validationResult} ]
     `);
         return null;
     }

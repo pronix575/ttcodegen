@@ -1,6 +1,7 @@
 export interface CliOption {
   name: string;
   option: string;
+  required: boolean;
 }
 
 export interface CliArgument {

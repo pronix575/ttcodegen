@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getConfig = void 0;
+exports.config = exports.getConfig = void 0;
 const filesManager_1 = require("./filesManager");
 const glob_1 = require("glob");
 const findFileTop_1 = require("./utils/findFileTop");
@@ -40,3 +40,4 @@ function getConfig() {
     }
 }
 exports.getConfig = getConfig;
+exports.config = getConfig();

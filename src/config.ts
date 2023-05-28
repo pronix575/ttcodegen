@@ -49,3 +49,5 @@ export function getConfig(): TTCodegenConfig | null {
     return null;
   }
 }
+
+export const config = getConfig();

@@ -1,9 +1,9 @@
-import { getFileContent } from "./filesManager";
+import chalk from "chalk";
 import { glob } from "glob";
-import { findFileTop } from "./utils/findFileTop";
+import { getFileContent } from "./filesManager";
+import { findFileTop } from "./utils";
 import { TTCodegenConfig } from "./types";
 import { ttCodegenConfigSchema } from "./validateSchemas";
-import chalk from "chalk";
 
 async function findTtcodegenJson() {
   const bottomFile = (await glob("**/ttcodegen.json"))?.[0] || null;

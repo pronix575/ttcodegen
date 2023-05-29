@@ -24,6 +24,6 @@ async function renderFiles({ option, params, config }) {
         const path = formatTemplatePath(preparedPath, params.path);
         return { path, content };
     }));
-    console.log(files);
+    files.forEach(({ path, content }) => (0, filesManager_1.createFile)(`./${path}`, content));
 }
 exports.renderFiles = renderFiles;

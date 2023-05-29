@@ -1,6 +1,6 @@
 import { glob } from "glob";
 import { CliOption, TTCodegenConfig } from "./types";
-import { getFileContent } from "./filesManager";
+import { createFile, getFileContent } from "./filesManager";
 import { renderTemplate } from "./templateEngine";
 import path from "path";
 
@@ -41,5 +41,5 @@ export async function renderFiles({ option, params, config }: RenderProps) {
     })
   );
 
-  console.log(files);
+  files.forEach(({ path, content }) => createFile(`./${path}`, content));
 }

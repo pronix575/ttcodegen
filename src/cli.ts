@@ -1,7 +1,8 @@
 import { createCommand } from "commander";
 import { TTCodegenConfig } from "./types";
-import { config } from "./config";
+import { getConfig } from "./config";
 import { programDescription, programVersion } from "./constants";
+import { renderFiles } from "./core";
 
 function createProgram(config: TTCodegenConfig) {
   const program = createCommand();
@@ -24,6 +25,8 @@ function createProgram(config: TTCodegenConfig) {
 }
 
 export async function startCliProgram() {
+  const config = await getConfig();
+
   if (!config) return;
 
   const program = createProgram(config)
@@ -32,26 +35,35 @@ export async function startCliProgram() {
     .version(programVersion);
 
   program.action(() => {
-    const [option, ...paramsList] = process.argv?.slice(2, process.argv.length);
+    const [optionCommand, ...paramsList] = process.argv?.slice(
+      2,
+      process.argv.length
+    );
 
-    const params = paramsList.reduce((acc, elem, index) => {
-      if (index === 0) {
-        return {
-          path: elem,
-        };
-      }
+    const params: { [key: string]: string } = paramsList.reduce(
+      (acc, elem, index) => {
+        if (index === 0) {
+          return {
+            path: elem,
+          };
+        }
 
-      const argumentKey = config?.arguments[index - 1]?.name;
+        const argumentKey = config?.arguments[index - 1]?.name;
 
-      if (!argumentKey) return acc;
+        if (!argumentKey) return acc;
 
-      return { ...acc, [argumentKey]: elem };
-    }, {});
+        return { ...acc, [argumentKey]: elem };
+      },
+      {}
+    );
 
-    console.log({
-      option,
-      params,
-    });
+    const option = config?.options.find(
+      (elem) => elem.option === optionCommand
+    );
+
+    if (!option) return;
+
+    renderFiles({ option, params, config });
   });
 
   await program.parseAsync(process.argv);

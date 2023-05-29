@@ -1,12 +1,12 @@
 import { getFileContent } from "./filesManager";
-import { globSync } from "glob";
+import { glob } from "glob";
 import { findFileTop } from "./utils/findFileTop";
 import { TTCodegenConfig } from "./types";
 import { ttCodegenConfigSchema } from "./validateSchemas";
 import chalk from "chalk";
 
-function findTtcodegenJson() {
-  const bottomFile = globSync("**/ttcodegen.json")?.[0] || null;
+async function findTtcodegenJson() {
+  const bottomFile = (await glob("**/ttcodegen.json"))?.[0] || null;
 
   if (bottomFile) return bottomFile;
 
@@ -15,8 +15,8 @@ function findTtcodegenJson() {
   return topFile;
 }
 
-export function getConfig(): TTCodegenConfig | null {
-  const configFilePath = findTtcodegenJson();
+export async function getConfig(): Promise<TTCodegenConfig | null> {
+  const configFilePath = await findTtcodegenJson();
 
   if (!configFilePath) {
     console.log(
@@ -28,12 +28,12 @@ export function getConfig(): TTCodegenConfig | null {
     return null;
   }
 
-  const configFileContent = getFileContent(configFilePath);
+  const configFileContent = await getFileContent(configFilePath);
 
   try {
     const contentJson = JSON.parse(configFileContent);
 
-    // ttCodegenConfigSchema.validateSync(contentJson);
+    ttCodegenConfigSchema.validateSync(contentJson);
 
     return contentJson;
   } catch (e: any) {
@@ -49,5 +49,3 @@ export function getConfig(): TTCodegenConfig | null {
     return null;
   }
 }
-
-export const config = getConfig();

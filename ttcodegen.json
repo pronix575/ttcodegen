@@ -4,10 +4,6 @@
     {
       "name": "name",
       "description": "Entity name"
-    },
-    {
-      "name": "data",
-      "description": "ENTRY DATA"
     }
   ],
   "options": [

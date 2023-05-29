@@ -7,7 +7,6 @@ exports.config = exports.getConfig = void 0;
 const filesManager_1 = require("./filesManager");
 const glob_1 = require("glob");
 const findFileTop_1 = require("./utils/findFileTop");
-const validateSchemas_1 = require("./validateSchemas");
 const chalk_1 = __importDefault(require("chalk"));
 function findTtcodegenJson() {
     const bottomFile = (0, glob_1.globSync)("**/ttcodegen.json")?.[0] || null;
@@ -27,7 +26,7 @@ function getConfig() {
     const configFileContent = (0, filesManager_1.getFileContent)(configFilePath);
     try {
         const contentJson = JSON.parse(configFileContent);
-        validateSchemas_1.ttCodegenConfigSchema.validateSync(contentJson);
+        // ttCodegenConfigSchema.validateSync(contentJson);
         return contentJson;
     }
     catch (e) {

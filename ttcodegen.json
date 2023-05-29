@@ -2,18 +2,24 @@
   "templatesDirectoryPath": "./ttcTemplates",
   "arguments": [
     {
-      "name": "<name>",
+      "name": "name",
       "description": "Entity name"
+    },
+    {
+      "name": "data",
+      "description": "ENTRY DATA"
     }
   ],
   "options": [
     {
       "name": "component",
-      "option": "-C"
+      "option": "-C",
+      "description": "Create react component"
     },
     {
       "name": "service",
-      "option": "--service, -s"
+      "option": "-S",
+      "description": "Create effector service"
     }
   ]
 }

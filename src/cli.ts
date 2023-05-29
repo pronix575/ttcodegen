@@ -6,20 +6,19 @@ import { programDescription, programVersion } from "./constants";
 function createProgram(config: TTCodegenConfig) {
   const program = createCommand();
 
-  config.options.forEach(({ option, required }) => {
+  config.options.forEach(({ option, required, description }) => {
     if (required) {
-      program.requiredOption(option);
+      program.requiredOption(option, description);
     } else {
-      program.option(option);
+      program.option(option, description);
     }
   });
+
+  program.argument("<path>", "Directory path");
+
   config.arguments.forEach((argument) =>
     program.argument(argument.name, argument.description)
   );
-
-  program.on("src", (...data) => console.log(data));
-
-  program.argument("<path>", "Directory path");
 
   return program;
 }
@@ -32,11 +31,28 @@ export async function startCliProgram() {
     .description(programDescription)
     .version(programVersion);
 
-  program.action((path, name, options, data) => {
-    // console.log(path, name, options);
+  program.action(() => {
+    const [option, ...paramsList] = process.argv?.slice(2, process.argv.length);
+
+    const params = paramsList.reduce((acc, elem, index) => {
+      if (index === 0) {
+        return {
+          path: elem,
+        };
+      }
+
+      const argumentKey = config?.arguments[index - 1]?.name;
+
+      if (!argumentKey) return acc;
+
+      return { ...acc, [argumentKey]: elem };
+    }, {});
+
+    console.log({
+      option,
+      params,
+    });
   });
 
-  const res = await program.parseAsync(process.argv);
-
-  console.log(res);
+  await program.parseAsync(process.argv);
 }

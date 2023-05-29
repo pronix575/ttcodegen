@@ -6,17 +6,16 @@ const config_1 = require("./config");
 const constants_1 = require("./constants");
 function createProgram(config) {
     const program = (0, commander_1.createCommand)();
-    config.options.forEach(({ option, required }) => {
+    config.options.forEach(({ option, required, description }) => {
         if (required) {
-            program.requiredOption(option);
+            program.requiredOption(option, description);
         }
         else {
-            program.option(option);
+            program.option(option, description);
         }
     });
-    config.arguments.forEach((argument) => program.argument(argument.name, argument.description));
-    program.on("src", (...data) => console.log(data));
     program.argument("<path>", "Directory path");
+    config.arguments.forEach((argument) => program.argument(argument.name, argument.description));
     return program;
 }
 async function startCliProgram() {
@@ -26,10 +25,24 @@ async function startCliProgram() {
         .name("ttcodegen")
         .description(constants_1.programDescription)
         .version(constants_1.programVersion);
-    program.action((path, name, options, data) => {
-        // console.log(path, name, options);
+    program.action(() => {
+        const [option, ...paramsList] = process.argv?.slice(2, process.argv.length);
+        const params = paramsList.reduce((acc, elem, index) => {
+            if (index === 0) {
+                return {
+                    path: elem,
+                };
+            }
+            const argumentKey = config_1.config?.arguments[index - 1]?.name;
+            if (!argumentKey)
+                return acc;
+            return { ...acc, [argumentKey]: elem };
+        }, {});
+        console.log({
+            option,
+            params,
+        });
     });
-    const res = await program.parseAsync(process.argv);
-    console.log(res);
+    await program.parseAsync(process.argv);
 }
 exports.startCliProgram = startCliProgram;

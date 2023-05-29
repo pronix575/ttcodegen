@@ -33,7 +33,7 @@ export function getConfig(): TTCodegenConfig | null {
   try {
     const contentJson = JSON.parse(configFileContent);
 
-    ttCodegenConfigSchema.validateSync(contentJson);
+    // ttCodegenConfigSchema.validateSync(contentJson);
 
     return contentJson;
   } catch (e: any) {

@@ -2,7 +2,7 @@
 # ttcodegen
 ![](https://img.shields.io/github/package-json/v/pronix575/ttcodegen) ![](https://img.shields.io/npm/dt/@pronix/ttcodegen.svg)
 
-# Cli for simple creation effector-services and React-components
+# Cli for creating file structures based on templates
 
 ## Installation
 
@@ -10,41 +10,54 @@
 npm i -g @pronix/ttcodegen
 ```
 
-## Basic usage:
+## Using:
 
-### 1. Creation of service
+### 1. Create ttcodegen.json configuration file
 
-```bash
-ttcodegen generate --service ./src/services/users createUser
-# or
-ttc g -s ./src/services/users createUser
+```json
+{
+  "templatesDirectoryPath": "./templates",
+  "arguments": [],
+  "options": [
+    {
+      "name": "component",
+      "option": "-C",
+      "description": "Create react component"
+    },
+    {
+      "name": "service",
+      "option": "-S",
+      "description": "Create effector service"
+    }
+  ]
+}
+
 ```
 
-### 2. Creation of component
-```bash
-ttcodegen generate --component ./src/services/users/views CreateUserModal
-# or
-ttc g -c ./src/services/users/views CreateUserModal
+### 2. Create template files in directory with any option name
+> "./ttc/templates/service/{{name}}Service.container.tsx.hbs"
+```hbs
+import React from 'react';
+import { {{ name }}Service } from './{{ name }}Service.models';
+
+const { inputs, outputs } = {{ name }}Service;
+
+export const {{ cfl name }}Container = () => {
+  return <></>;
+};
 ```
+![](/assets/ttcFiles.png)
 
-> example
+### 3. Run ttc
 
-- createUserService
-  - displayUserService
-  - displayUsersListService
-  - createUserService
-    - createUserService.models.ts
-    - createUserService.conainer.tsx
-    - createUserService.relations.ts
-    - createUserService.types.ts
-    - createUserService.container.ts
-    - createUserService.api.ts
-    - views 
-      - CreateUserForm
-          - CreateUserForm
-          - CreateUserForm.tsx
-          - CreateUserForm.styled.ts
-          - CreateUserForm.types.ts
-      - CreateUserModal.tsx
-      - CreateUserModal.types.ts
-      - CreateUserModal.styled.ts
+```bash
+$ ttc -S ./src/services createTask
+
+📂 ./src/services/applyTask/
+
++ 📄 applyTaskService.types.ts
++ 📄 applyTaskService.models.ts
++ 📄 applyTaskService.container.tsx
++ 📄 applyTaskService.api.ts
++ 📄 index.ts
+```

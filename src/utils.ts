@@ -53,6 +53,16 @@ export function writeFileSyncRecursive(
   fs.writeFileSync(root + filepath, content, charset);
 }
 
+export function formatTemplatePath(fileName: string, filePath: string) {
+  const fileNameArrayBySlash = fileName.split("/");
+
+  const fileNameWithoutPath = fileNameArrayBySlash.at(-1);
+
+  const correctFileName = fileNameWithoutPath?.replace(".hbs", "");
+
+  return "./" + path.join(filePath, correctFileName || "");
+}
+
 export function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

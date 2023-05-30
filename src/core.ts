@@ -4,6 +4,7 @@ import { createFile, getFileContent } from "./filesManager";
 import { renderTemplate } from "./templateEngine";
 import { join } from "path";
 import chalk from "chalk";
+import { formatTemplatePath } from "./utils";
 
 interface RenderProps {
   config: TTCodegenConfig;
@@ -13,20 +14,12 @@ interface RenderProps {
   };
 }
 
-function formatTemplatePath(fileName: string, filePath: string) {
-  const fileNameArrayBySlash = fileName.split("/");
-
-  const fileNameWithoutPath = fileNameArrayBySlash.at(-1);
-
-  const correctFileName = fileNameWithoutPath?.replace(".hbs", "");
-
-  return "./" + join(filePath, correctFileName || "");
-}
-
 export async function renderFiles({ option, params, config }: RenderProps) {
   const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
 
   const templateFilesPaths = await glob(searchPath);
+
+  console.log(params)
 
   const files = await Promise.all(
     templateFilesPaths.map(async (templatePath) => {
@@ -36,16 +29,16 @@ export async function renderFiles({ option, params, config }: RenderProps) {
 
       const preparedPath = renderTemplate(templatePath, params);
 
-      const path = formatTemplatePath(
+      const formattedPath = formatTemplatePath(
         preparedPath,
         join(params.path, params.name)
       );
 
-      return { path, content };
+      return { path: formattedPath, content };
     })
   );
 
-  files.forEach(({ path, content }) => createFile(`${path}`, content));
+  files.map(({ path, content }) => createFile(`${path}`, content));
 
   console.log(files.map((elem) => chalk.greenBright`${elem.path}`).join("\n"));
 }

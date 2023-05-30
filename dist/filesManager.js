@@ -10,7 +10,7 @@ async function getFileContent(root) {
     return fs_1.default.readFileSync(root).toString();
 }
 exports.getFileContent = getFileContent;
-async function createFile(root, content) {
+function createFile(root, content) {
     (0, utils_1.writeFileSyncRecursive)(root, content);
 }
 exports.createFile = createFile;

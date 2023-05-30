@@ -1,7 +1,11 @@
 import { createCommand } from "commander";
 import { TTCodegenConfig } from "./types";
 import { getConfig } from "./config";
-import { programDescription, programVersion } from "./constants";
+import {
+  initialArguments,
+  programDescription,
+  programVersion,
+} from "./constants";
 import { renderFiles } from "./core";
 
 function createProgram(config: TTCodegenConfig) {
@@ -15,9 +19,7 @@ function createProgram(config: TTCodegenConfig) {
     }
   });
 
-  program.argument("<path>", "Directory path");
-
-  config.arguments.forEach((argument) =>
+  [...initialArguments, ...config.arguments].forEach((argument) =>
     program.argument(argument.name, argument.description)
   );
 
@@ -42,9 +44,12 @@ export async function startCliProgram() {
 
     const params: { [key: string]: string } = paramsList.reduce(
       (acc, elem, index) => {
-        if (index === 0) {
+        const initialArgument = initialArguments[index];
+
+        if (initialArgument) {
           return {
-            path: elem,
+            ...acc,
+            [initialArgument.name]: elem,
           };
         }
 

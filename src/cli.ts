@@ -1,5 +1,5 @@
 import { createCommand } from "commander";
-import { TTCodegenConfig } from "./types";
+import { Params, TTCodegenConfig } from "./types";
 import { getConfig } from "./config";
 import {
   initialArguments,
@@ -42,25 +42,22 @@ export async function startCliProgram() {
       process.argv.length
     );
 
-    const params: { [key: string]: string } = paramsList.reduce(
-      (acc, elem, index) => {
-        const initialArgument = initialArguments[index];
+    const params: Params = paramsList.reduce((acc, elem, index) => {
+      const initialArgument = initialArguments[index];
 
-        if (initialArgument) {
-          return {
-            ...acc,
-            [initialArgument.name]: elem,
-          };
-        }
+      if (initialArgument) {
+        return {
+          ...acc,
+          [initialArgument.name]: elem,
+        };
+      }
 
-        const argumentKey = config?.arguments[index - 1]?.name;
+      const argumentKey = config?.arguments[index - 1]?.name;
 
-        if (!argumentKey) return acc;
+      if (!argumentKey) return acc;
 
-        return { ...acc, [argumentKey]: elem };
-      },
-      {}
-    );
+      return { ...acc, [argumentKey]: elem };
+    }, {});
 
     const option = config?.options.find(
       (elem) => elem.option === optionCommand

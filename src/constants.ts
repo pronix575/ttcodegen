@@ -1,7 +1,9 @@
 import chalk from "chalk";
 import figlet from "figlet";
 
-export const logo = chalk.hex("#189EE9")(figlet.textSync("ttcodegen 2.0"));
+export const TT_COLOR = "#189EE9";
+
+export const logo = chalk.hex(TT_COLOR)(figlet.textSync("ttcodegen 2.0"));
 
 export const programDescription = `${logo}\n\nCli for creating file structures based on templates © TT-frontend team 2023`;
 

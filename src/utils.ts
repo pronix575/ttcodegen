@@ -2,6 +2,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { FilesList } from "./types";
 import chalk from "chalk";
+import { TT_COLOR } from "./constants";
 
 export function findFileTop(name: string): string | null {
   let dir: string = __dirname;
@@ -55,20 +56,50 @@ export function writeFileSyncRecursive(
   fs.writeFileSync(root + filepath, content, charset);
 }
 
-export function formatTemplatePath(fileName: string, filePath: string) {
+export function formatTemplatePath(
+  fileName: string,
+  filePath: string,
+  add: string = "./"
+) {
   const fileNameArrayBySlash = fileName.split("/");
 
   const fileNameWithoutPath = fileNameArrayBySlash.at(-1);
 
   const correctFileName = fileNameWithoutPath?.replace(".hbs", "");
 
-  return "./" + path.join(filePath, correctFileName || "");
+  return add + path.join(filePath, correctFileName || "");
 }
 
 export function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function getLastBySep(str: string, sep: string) {
+  const arrBySep = str.split(sep);
+
+  return arrBySep.at(-1) || "";
+}
+
 export function drawCreatedFiles(files: FilesList) {
-  console.log(files.map((elem) => chalk.greenBright`${elem.path}`).join("\n"));
+  const fileStrings = files.map((file) => {
+    const fileName = getLastBySep(file.path, "/");
+
+    const fileExt = getLastBySep(fileName, ".");
+
+    const fileNameWithoutExt = fileName.replace(`.${fileExt}`, "");
+
+    return `${chalk.white`${fileNameWithoutExt}`}${chalk.hex(
+      "#3178c6"
+    )`.${fileExt}`}`;
+  });
+
+  const filesPath = files[0]?.path || "";
+
+  const directoryPath = filesPath.replace(getLastBySep(filesPath, "/"), "");
+
+  console.log(chalk.hex(TT_COLOR)`📂 ${directoryPath}\n`);
+
+  console.log(
+    fileStrings.map((elem) => chalk.greenBright`+ 📄 ${elem}`).join("\n")
+  );
 }

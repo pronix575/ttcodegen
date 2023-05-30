@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeFileSyncRecursive = exports.findFileTop = void 0;
+exports.capitalizeFirstLetter = exports.writeFileSyncRecursive = exports.findFileTop = void 0;
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 function findFileTop(name) {
@@ -68,3 +68,7 @@ function writeFileSyncRecursive(filename, content, charset = "utf8") {
     fs.writeFileSync(root + filepath, content, charset);
 }
 exports.writeFileSyncRecursive = writeFileSyncRecursive;
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+exports.capitalizeFirstLetter = capitalizeFirstLetter;

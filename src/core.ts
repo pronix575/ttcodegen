@@ -2,7 +2,8 @@ import { glob } from "glob";
 import { CliOption, TTCodegenConfig } from "./types";
 import { createFile, getFileContent } from "./filesManager";
 import { renderTemplate } from "./templateEngine";
-import path from "path";
+import { join } from "path";
+import chalk from "chalk";
 
 interface RenderProps {
   config: TTCodegenConfig;
@@ -19,11 +20,11 @@ function formatTemplatePath(fileName: string, filePath: string) {
 
   const correctFileName = fileNameWithoutPath?.replace(".hbs", "");
 
-  return path.join(filePath, correctFileName || "");
+  return "./" + join(filePath, correctFileName || "");
 }
 
 export async function renderFiles({ option, params, config }: RenderProps) {
-  const searchPath = `${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
+  const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
 
   const templateFilesPaths = await glob(searchPath);
 
@@ -35,11 +36,16 @@ export async function renderFiles({ option, params, config }: RenderProps) {
 
       const preparedPath = renderTemplate(templatePath, params);
 
-      const path = formatTemplatePath(preparedPath, params.path);
+      const path = formatTemplatePath(
+        preparedPath,
+        join(params.path, params.name)
+      );
 
       return { path, content };
     })
   );
 
-  files.forEach(({ path, content }) => createFile(`./${path}`, content));
+  files.forEach(({ path, content }) => createFile(`${path}`, content));
+
+  console.log(files.map((elem) => chalk.greenBright`${elem.path}`).join("\n"));
 }

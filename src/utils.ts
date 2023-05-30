@@ -52,3 +52,7 @@ export function writeFileSyncRecursive(
   // -- write file
   fs.writeFileSync(root + filepath, content, charset);
 }
+
+export function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

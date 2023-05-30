@@ -1,6 +1,6 @@
 {
   "name": "@pronix/ttcodegen",
-  "version": "1.4.4",
+  "version": "2.0.0-beta-1",
   "private": false,
   "description": "codegen for effector services",
   "main": "./dist/index.js",

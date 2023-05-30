@@ -1,8 +1,11 @@
 import * as path from "path";
 import * as fs from "fs";
+import * as os from "os";
 import { FilesList } from "./types";
 import chalk from "chalk";
 import { TT_COLOR } from "./constants";
+
+export const slash = os.platform() === "win32" ? `\\` : "/";
 
 export function findFileTop(name: string): string | null {
   let dir: string = __dirname;
@@ -59,9 +62,9 @@ export function writeFileSyncRecursive(
 export function formatTemplatePath(
   fileName: string,
   filePath: string,
-  add: string = "./"
+  add: string = `.${slash}`
 ) {
-  const fileNameArrayBySlash = fileName.split("/");
+  const fileNameArrayBySlash = fileName.split(slash);
 
   const fileNameWithoutPath = fileNameArrayBySlash.at(-1);
 
@@ -82,7 +85,7 @@ function getLastBySep(str: string, sep: string) {
 
 export function drawCreatedFiles(files: FilesList) {
   const fileStrings = files.map((file) => {
-    const fileName = getLastBySep(file.path, "/");
+    const fileName = getLastBySep(file.path, slash);
 
     const fileExt = getLastBySep(fileName, ".");
 
@@ -95,7 +98,7 @@ export function drawCreatedFiles(files: FilesList) {
 
   const filesPath = files[0]?.path || "";
 
-  const directoryPath = filesPath.replace(getLastBySep(filesPath, "/"), "");
+  const directoryPath = filesPath.replace(getLastBySep(filesPath, slash), "");
 
   console.log(chalk.hex(TT_COLOR)`📂 ${directoryPath}\n`);
 

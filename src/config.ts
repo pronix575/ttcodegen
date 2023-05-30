@@ -1,12 +1,12 @@
 import chalk from "chalk";
 import { glob } from "glob";
 import { getFileContent } from "./filesManager";
-import { findFileTop } from "./utils";
+import { findFileTop, slash } from "./utils";
 import { TTCodegenConfig } from "./types";
 import { ttCodegenConfigSchema } from "./validateSchemas";
 
 async function findTtcodegenJson() {
-  const bottomFile = (await glob("**/ttcodegen.json"))?.[0] || null;
+  const bottomFile = (await glob(`**${slash}ttcodegen.json`))?.[0] || null;
 
   if (bottomFile) return bottomFile;
 

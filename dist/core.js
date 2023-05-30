@@ -14,7 +14,7 @@ const renderFile = async (templatePath, params) => {
     return { path: formattedPath, content };
 };
 async function renderFiles({ option, params, config }) {
-    const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
+    const searchPath = `**${utils_1.slash}${config.templatesDirectoryPath}/${option.name}${utils_1.slash}**${utils_1.slash}*.hbs`;
     const templateFilesPaths = await (0, glob_1.glob)(searchPath);
     const files = await Promise.all(templateFilesPaths.map((templatePath) => renderFile(templatePath, params)));
     files.map(({ path, content }) => (0, filesManager_1.createFile)(`${path}`, content));

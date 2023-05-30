@@ -26,11 +26,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.drawCreatedFiles = exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = void 0;
+exports.drawCreatedFiles = exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = exports.slash = void 0;
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
+const os = __importStar(require("os"));
 const chalk_1 = __importDefault(require("chalk"));
 const constants_1 = require("./constants");
+exports.slash = os.platform() === "win32" ? `\\` : "/";
 function findFileTop(name) {
     let dir = __dirname;
     let filePath = path.join(dir, name);
@@ -73,8 +75,8 @@ function writeFileSyncRecursive(filename, content, charset = "utf8") {
     fs.writeFileSync(root + filepath, content, charset);
 }
 exports.writeFileSyncRecursive = writeFileSyncRecursive;
-function formatTemplatePath(fileName, filePath, add = "./") {
-    const fileNameArrayBySlash = fileName.split("/");
+function formatTemplatePath(fileName, filePath, add = `.${exports.slash}`) {
+    const fileNameArrayBySlash = fileName.split(exports.slash);
     const fileNameWithoutPath = fileNameArrayBySlash.at(-1);
     const correctFileName = fileNameWithoutPath?.replace(".hbs", "");
     return add + path.join(filePath, correctFileName || "");
@@ -90,13 +92,13 @@ function getLastBySep(str, sep) {
 }
 function drawCreatedFiles(files) {
     const fileStrings = files.map((file) => {
-        const fileName = getLastBySep(file.path, "/");
+        const fileName = getLastBySep(file.path, exports.slash);
         const fileExt = getLastBySep(fileName, ".");
         const fileNameWithoutExt = fileName.replace(`.${fileExt}`, "");
         return `${chalk_1.default.white `${fileNameWithoutExt}`}${chalk_1.default.hex("#3178c6") `.${fileExt}`}`;
     });
     const filesPath = files[0]?.path || "";
-    const directoryPath = filesPath.replace(getLastBySep(filesPath, "/"), "");
+    const directoryPath = filesPath.replace(getLastBySep(filesPath, exports.slash), "");
     console.log(chalk_1.default.hex(constants_1.TT_COLOR) `📂 ${directoryPath}\n`);
     console.log(fileStrings.map((elem) => chalk_1.default.greenBright `+ 📄 ${elem}`).join("\n"));
 }

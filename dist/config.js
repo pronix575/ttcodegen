@@ -10,7 +10,7 @@ const filesManager_1 = require("./filesManager");
 const utils_1 = require("./utils");
 const validateSchemas_1 = require("./validateSchemas");
 async function findTtcodegenJson() {
-    const bottomFile = (await (0, glob_1.glob)("**/ttcodegen.json"))?.[0] || null;
+    const bottomFile = (await (0, glob_1.glob)(`**${utils_1.slash}ttcodegen.json`))?.[0] || null;
     if (bottomFile)
         return bottomFile;
     const topFile = (0, utils_1.findFileTop)("ttcodegen.json");

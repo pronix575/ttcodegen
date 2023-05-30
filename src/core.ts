@@ -3,7 +3,7 @@ import { FileData, Params, RenderProps } from "./types";
 import { createFile, getFileContent } from "./filesManager";
 import { renderTemplate } from "./templateEngine";
 import { join } from "path";
-import { drawCreatedFiles, formatTemplatePath } from "./utils";
+import { drawCreatedFiles, formatTemplatePath, slash } from "./utils";
 
 const renderFile = async (
   templatePath: string,
@@ -24,7 +24,7 @@ const renderFile = async (
 };
 
 export async function renderFiles({ option, params, config }: RenderProps) {
-  const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
+  const searchPath = `**${slash}${config.templatesDirectoryPath}/${option.name}${slash}**${slash}*.hbs`;
 
   const templateFilesPaths = await glob(searchPath);
 

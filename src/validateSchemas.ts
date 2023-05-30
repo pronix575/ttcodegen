@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { TTCodegenConfig } from "./types";
 
 const cliOptionSchema = yup
   .object({

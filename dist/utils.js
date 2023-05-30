@@ -22,10 +22,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = void 0;
+exports.drawCreatedFiles = exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = void 0;
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
+const chalk_1 = __importDefault(require("chalk"));
 function findFileTop(name) {
     let dir = __dirname;
     let filePath = path.join(dir, name);
@@ -79,3 +83,7 @@ function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 exports.capitalizeFirstLetter = capitalizeFirstLetter;
+function drawCreatedFiles(files) {
+    console.log(files.map((elem) => chalk_1.default.greenBright `${elem.path}`).join("\n"));
+}
+exports.drawCreatedFiles = drawCreatedFiles;

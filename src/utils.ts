@@ -1,5 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
+import { FilesList } from "./types";
+import chalk from "chalk";
 
 export function findFileTop(name: string): string | null {
   let dir: string = __dirname;
@@ -65,4 +67,8 @@ export function formatTemplatePath(fileName: string, filePath: string) {
 
 export function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function drawCreatedFiles(files: FilesList) {
+  console.log(files.map((elem) => chalk.greenBright`${elem.path}`).join("\n"));
 }

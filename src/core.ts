@@ -1,44 +1,38 @@
 import { glob } from "glob";
-import { CliOption, TTCodegenConfig } from "./types";
+import { FileData, Params, RenderProps } from "./types";
 import { createFile, getFileContent } from "./filesManager";
 import { renderTemplate } from "./templateEngine";
 import { join } from "path";
-import chalk from "chalk";
-import { formatTemplatePath } from "./utils";
+import { drawCreatedFiles, formatTemplatePath } from "./utils";
 
-interface RenderProps {
-  config: TTCodegenConfig;
-  option: CliOption;
-  params: {
-    [key: string]: string;
-  };
-}
+const renderFile = async (
+  templatePath: string,
+  params: Params
+): Promise<FileData> => {
+  const template = await getFileContent(templatePath);
+
+  const content = renderTemplate(template, params);
+
+  const preparedPath = renderTemplate(templatePath, params);
+
+  const formattedPath = formatTemplatePath(
+    preparedPath,
+    join(params.path, params.name)
+  );
+
+  return { path: formattedPath, content };
+};
 
 export async function renderFiles({ option, params, config }: RenderProps) {
   const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
 
   const templateFilesPaths = await glob(searchPath);
 
-  console.log(params)
-
   const files = await Promise.all(
-    templateFilesPaths.map(async (templatePath) => {
-      const template = await getFileContent(templatePath);
-
-      const content = renderTemplate(template, params);
-
-      const preparedPath = renderTemplate(templatePath, params);
-
-      const formattedPath = formatTemplatePath(
-        preparedPath,
-        join(params.path, params.name)
-      );
-
-      return { path: formattedPath, content };
-    })
+    templateFilesPaths.map((templatePath) => renderFile(templatePath, params))
   );
 
   files.map(({ path, content }) => createFile(`${path}`, content));
 
-  console.log(files.map((elem) => chalk.greenBright`${elem.path}`).join("\n"));
+  drawCreatedFiles(files);
 }

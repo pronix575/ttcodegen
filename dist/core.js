@@ -13,7 +13,6 @@ const utils_1 = require("./utils");
 async function renderFiles({ option, params, config }) {
     const searchPath = `**/${config.templatesDirectoryPath}/${option.name}/**/*.hbs`;
     const templateFilesPaths = await (0, glob_1.glob)(searchPath);
-    console.log(params);
     const files = await Promise.all(templateFilesPaths.map(async (templatePath) => {
         const template = await (0, filesManager_1.getFileContent)(templatePath);
         const content = (0, templateEngine_1.renderTemplate)(template, params);

@@ -4,16 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getConfig = void 0;
-const filesManager_1 = require("./filesManager");
-const glob_1 = require("glob");
-const findFileTop_1 = require("./utils/findFileTop");
-const validateSchemas_1 = require("./validateSchemas");
 const chalk_1 = __importDefault(require("chalk"));
+const glob_1 = require("glob");
+const filesManager_1 = require("./filesManager");
+const utils_1 = require("./utils");
+const validateSchemas_1 = require("./validateSchemas");
 async function findTtcodegenJson() {
     const bottomFile = (await (0, glob_1.glob)("**/ttcodegen.json"))?.[0] || null;
     if (bottomFile)
         return bottomFile;
-    const topFile = (0, findFileTop_1.findFileTop)("ttcodegen.json");
+    const topFile = (0, utils_1.findFileTop)("ttcodegen.json");
     return topFile;
 }
 async function getConfig() {

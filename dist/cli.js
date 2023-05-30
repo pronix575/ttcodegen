@@ -15,8 +15,7 @@ function createProgram(config) {
             program.option(option, description);
         }
     });
-    program.argument("<path>", "Directory path");
-    config.arguments.forEach((argument) => program.argument(argument.name, argument.description));
+    [...constants_1.initialArguments, ...config.arguments].forEach((argument) => program.argument(argument.name, argument.description));
     return program;
 }
 async function startCliProgram() {
@@ -30,9 +29,11 @@ async function startCliProgram() {
     program.action(() => {
         const [optionCommand, ...paramsList] = process.argv?.slice(2, process.argv.length);
         const params = paramsList.reduce((acc, elem, index) => {
-            if (index === 0) {
+            const initialArgument = constants_1.initialArguments[index];
+            if (initialArgument) {
                 return {
-                    path: elem,
+                    ...acc,
+                    [initialArgument.name]: elem,
                 };
             }
             const argumentKey = config?.arguments[index - 1]?.name;

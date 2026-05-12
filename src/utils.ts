@@ -4,6 +4,8 @@ import * as os from "os";
 import { FilesList } from "./types";
 import chalk from "chalk";
 import { TT_COLOR } from "./constants";
+import { readdir, stat } from "fs/promises";
+import { join } from "path";
 
 export const slash = os.platform() === "win32" ? `\\` : "/";
 
@@ -105,4 +107,24 @@ export function drawCreatedFiles(files: FilesList) {
   console.log(
     fileStrings.map((elem) => chalk.greenBright`+ 📄 ${elem}`).join("\n")
   );
+}
+
+export async function getFolders(dirPath: string): Promise<string[]> {
+  const folders: string[] = [];
+  const files = await readdir(dirPath);
+
+  for (const file of files) {
+    const filePath = join(dirPath, file);
+
+    const fileStat = await stat(filePath);
+
+    if (fileStat.isDirectory()) {
+      folders.push(filePath);
+
+      const subFolders = await getFolders(filePath);
+
+      folders.push(...subFolders);
+    }
+  }
+  return folders;
 }

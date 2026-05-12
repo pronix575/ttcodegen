@@ -26,12 +26,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.drawCreatedFiles = exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = exports.slash = void 0;
+exports.getFolders = exports.drawCreatedFiles = exports.capitalizeFirstLetter = exports.formatTemplatePath = exports.writeFileSyncRecursive = exports.findFileTop = exports.slash = void 0;
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 const os = __importStar(require("os"));
 const chalk_1 = __importDefault(require("chalk"));
 const constants_1 = require("./constants");
+const promises_1 = require("fs/promises");
+const path_1 = require("path");
 exports.slash = os.platform() === "win32" ? `\\` : "/";
 function findFileTop(name) {
     let dir = __dirname;
@@ -103,3 +105,18 @@ function drawCreatedFiles(files) {
     console.log(fileStrings.map((elem) => chalk_1.default.greenBright `+ 📄 ${elem}`).join("\n"));
 }
 exports.drawCreatedFiles = drawCreatedFiles;
+async function getFolders(dirPath) {
+    const folders = [];
+    const files = await (0, promises_1.readdir)(dirPath);
+    for (const file of files) {
+        const filePath = (0, path_1.join)(dirPath, file);
+        const fileStat = await (0, promises_1.stat)(filePath);
+        if (fileStat.isDirectory()) {
+            folders.push(filePath);
+            const subFolders = await getFolders(filePath);
+            folders.push(...subFolders);
+        }
+    }
+    return folders;
+}
+exports.getFolders = getFolders;
